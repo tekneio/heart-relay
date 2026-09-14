@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support — Heart Relay</title>
+  <link rel="icon" type="image/png" href="icon.png">
+  <style>
+    :root {
+      --accent: #ff3b5c;
+      --bg: #ffffff;
+      --text: #1c1c1e;
+      --secondary: #6e6e73;
+      --border: #e5e5ea;
+      --card: #f2f2f7;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --text: #f5f5f7;
+        --secondary: #98989d;
+        --border: #2c2c2e;
+        --card: #1c1c1e;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    .lang-switch {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .lang-switch a {
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1.5px solid var(--border);
+      color: var(--secondary);
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+    .lang-switch a.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .section { display: none; }
+    .section.visible { display: block; }
+    .app-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .app-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .app-icon img { width: 64px; height: 64px; border-radius: 16px; display: block; }
+    .app-title h1 { font-size: 24px; font-weight: 700; }
+    .app-title p { font-size: 14px; color: var(--secondary); margin-top: 2px; }
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 36px 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 24px 0 8px;
+      color: var(--accent);
+    }
+    p { margin-bottom: 12px; color: var(--text); }
+    ul, ol { margin: 8px 0 12px 22px; }
+    li { margin-bottom: 4px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .meta {
+      font-size: 13px;
+      color: var(--secondary);
+      margin-bottom: 32px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 15px;
+    }
+    .card strong { display: block; margin-bottom: 4px; }
+    .contact-card {
+      background: linear-gradient(135deg, rgba(255,59,92,0.10), rgba(255,122,143,0.06));
+      border: 1px solid rgba(255,59,92,0.25);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .contact-card .email {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    details {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 4px 20px;
+      margin: 12px 0;
+      transition: all 0.2s;
+    }
+    details[open] {
+      padding-bottom: 16px;
+    }
+    summary {
+      padding: 16px 0;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before {
+      content: '+';
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--accent);
+      transition: transform 0.2s;
+      width: 20px;
+      flex-shrink: 0;
+    }
+    details[open] summary::before { content: '–'; }
+    details p, details ol, details ul { margin-bottom: 8px; }
+    code {
+      background: rgba(127,127,127,0.18);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--secondary);
+    }
+    .footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="lang-switch">
+    <a href="#" class="active" onclick="showLang('en', this); return false;">English</a>
+    <a href="#" onclick="showLang('de', this); return false;">Deutsch</a>
+  </div>
+
+  <div id="lang-en" class="section visible">
+    <div class="app-header">
+      <div class="app-icon"><img src="icon.png" alt="Heart Relay"></div>
+      <div class="app-title">
+        <h1>Heart Relay</h1>
+        <p>Support &amp; FAQ</p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <p style="margin-bottom:6px; color:var(--secondary); font-size:14px;">Questions, problems, ideas?</p>
+      <span class="email"><a href="mailto:hello@tekneio.com?subject=Heart%20Relay%20Support">hello@tekneio.com</a></span>
+      <p style="margin:8px 0 0; font-size:13px; color:var(--secondary);">Include your iPhone and watch model, the receiving device (bike computer or app) and, if possible, the connection log from Settings &gt; Bluetooth &amp; Diagnostics.</p>
+    </div>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <details>
+      <summary>My bike computer / app does not find &ldquo;Heart Relay&rdquo;</summary>
+      
+      <p>The iPhone can only be <em>discovered</em> while Heart Relay is open in the foreground. Once a device has connected, the connection survives locking the iPhone and putting it in your pocket.</p>
+      <ol>
+        <li>Open Heart Relay on the iPhone and check that Bluetooth shows &ldquo;visible&rdquo;.</li>
+        <li>On the receiver: Sensors &rarr; add heart rate sensor &rarr; choose <strong>Heart Relay</strong>.</li>
+        <li>Still nothing? Settings &gt; Bluetooth &amp; Diagnostics &gt; Restart Bluetooth, then search again.</li>
+      </ol>
+      <p>Heart Relay uses Bluetooth only. Devices that accept heart rate sensors via ANT+ only (some older models) cannot connect; the iPhone has no ANT+ radio.</p>
+    </details>
+    <details>
+      <summary>The receiver asks for a pairing code</summary>
+      
+      <p>Some bike computers (for example the Hammerhead Karoo) read the iPhone&rsquo;s battery level, and iOS requires pairing for that. On the first connection iOS shows a pop-up with a six-digit code on the iPhone; type it into the receiver. Keep the iPhone unlocked with the app open while doing this, the request expires after about 30 seconds.</p>
+      <p>Afterwards the receiver appears under Settings &gt; Bluetooth &gt; My Devices. Leave it there; removing it removes the pairing. If the receiver hangs in &ldquo;Connecting&rdquo;: remove the sensor on the receiver, forget the device in the iPhone&rsquo;s Bluetooth settings, restart the receiver and pair again.</p>
+    </details>
+    <details>
+      <summary>The heart rate drops out or freezes</summary>
+      
+      <p>Three links can fail: watch sensor, watch-to-iPhone, iPhone-to-receiver. The connection log (Settings &gt; Bluetooth &amp; Diagnostics &gt; Connection log) tells you which:</p>
+      <ul>
+        <li><strong>&ldquo;No heart rate from HealthKit&rdquo;</strong> entries from the watch: the optical sensor lost contact. Wear the watch snug, one finger above the wrist bone; tattoos and cold skin make it worse. A chest strap connected in iOS 26 avoids this entirely.</li>
+        <li><strong>&ldquo;iPhone not reachable&rdquo;</strong>: watch and iPhone lost their link. Keep the iPhone within a few meters, ideally on the bike, not in a back pocket behind your body.</li>
+        <li><strong>&ldquo;Receiver unsubscribed&rdquo;</strong>: the Bluetooth link to the bike computer dropped. Check the distance and restart Bluetooth in the app.</li>
+      </ul>
+      <p>Note that the watch delivers a value every few seconds; the iPhone repeats the last value once per second so the receiver does not treat the pause as a sensor failure.</p>
+    </details>
+    <details>
+      <summary>Start on the iPhone says the watch did not start</summary>
+      
+      <p>Make sure the Heart Relay watch app is installed and up to date: on the iPhone open the Watch app &rarr; My Watch &rarr; Heart Relay (or &ldquo;Available Apps&rdquo; &rarr; Install). If it still does not react, open Heart Relay on the watch and tap Start there; the iPhone picks up the session automatically.</p>
+    </details>
+    <details>
+      <summary>Using AirPods Pro 3 or a chest strap without an Apple Watch</summary>
+      
+      <p>This needs iOS 26. Connect the AirPods Pro 3 or the Bluetooth heart rate monitor in the iOS Settings first. Then, on the main screen, select <strong>AirPods / chest strap</strong> as the source (you can deselect Apple Watch) and tap Start. The first time, iOS asks for Health access so the app can read the heart rate of the session.</p>
+    </details>
+    <details>
+      <summary>Heart rate zones, alerts and announcements</summary>
+      
+      <p>Settings &gt; Heart Rate Zones: enter your age and resting heart rate or take them from Health; the five zones use the Karvonen method (heart rate reserve). Settings &gt; Alerts &amp; Announcements lets you choose per device (watch, iPhone) what should happen on a zone change: haptic, sound or voice. The heart rate announcement speaks the value when it changes by the chosen step, on wrist raise or on double tap (watchOS 11). Test buttons are at the bottom of that page.</p>
+      <p>Announcements on a locked iPhone work; music is lowered briefly. More voices can be downloaded in Settings &gt; Accessibility &gt; Spoken Content &gt; Voices.</p>
+    </details>
+    <details>
+      <summary>Nothing shows on the Lock Screen</summary>
+      
+      <p>The first time a session starts, iOS asks &ldquo;Allow Live Activities from Heart Relay?&rdquo;. If you declined, enable it under Settings &gt; Heart Relay &gt; Live Activities. The Live Activity appears with the session and disappears when you stop.</p>
+    </details>
+    <details>
+      <summary>Should I keep the watch workout in Health?</summary>
+      
+      <p>If you import the ride from your bike computer afterwards (FIT file), discard the watch workout, otherwise the ride is in Health twice. Settings &gt; Workout &gt; Save to Health lets you choose Ask / Always / Never.</p>
+    </details>
+    <details>
+      <summary>How do I get a ride into Apple Health?</summary>
+      
+      <p>Export the ride from your bike computer&rsquo;s platform as a FIT file (Hammerhead dashboard, Garmin Connect, Wahoo, Bryton, Sigma &hellip;). Then either open it on the iPhone and choose Share &rarr; Heart Relay, tap &ldquo;Import FIT file&rdquo; in the app, or drop it into the &ldquo;Heart Relay&rdquo; folder in the Files app. The preview shows what will be written (workout, route, heart rate, distance, calories, cadence, power, laps as segments) and detects a ride that is already in Health.</p>
+      <p>Calories: taken from the file if present, otherwise calculated from power, otherwise estimated from heart rate using your Health profile. The estimate can be switched off per import.</p>
+    </details>
+    <details>
+      <summary>How do I delete my data?</summary>
+      
+      <ul>
+        <li>Health data written by the app: delete in the Health app (Browse &gt; Workouts, or the source list under Profile &gt; Apps).</li>
+        <li>FIT files and the connection log: Files app &gt; On My iPhone &gt; Heart Relay.</li>
+        <li>Everything else: delete the app on the iPhone, which also removes the watch app and all settings.</li>
+      </ul>
+    </details>
+
+    <h2>Privacy &amp; Data</h2>
+    <p>Heart Relay makes no network connections, has no accounts and no analytics. Your heart rate goes via Bluetooth to the device you connect and nowhere else. Read the full <a href="privacy.html">Privacy Policy</a>.</p>
+
+    <h2>System Requirements</h2>
+    <ul>
+      <li>iPhone with iOS 17 or later; Live Activities need iOS 17, the Dynamic Island an iPhone 14 Pro or newer</li>
+      <li>Apple Watch with watchOS 10 or later (double-tap announcements need watchOS 11)</li>
+      <li>Without a watch: iOS 26 with AirPods Pro 3 or a Bluetooth heart rate monitor</li>
+      <li>A receiver that accepts Bluetooth heart rate sensors: bike computers (Hammerhead Karoo tested; Wahoo ELEMNT, Garmin Edge, Bryton, Sigma), training apps (Zwift, Rouvy, MyWhoosh, TrainerRoad, Kinomap), Peloton, Concept2 and others</li>
+    </ul>
+
+    <h2>Still need help?</h2>
+    <p>Send an email to <a href="mailto:hello@tekneio.com">hello@tekneio.com</a>. Screenshots and the connection log speed things up considerably.</p>
+
+    <div class="footer">
+      <strong>Heart Relay</strong> &middot; Anastasios Panagou, Switzerland<br>
+      <a href="mailto:hello@tekneio.com">hello@tekneio.com</a> &middot;
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+
+  </div><!-- /lang-en -->
+
+  <div id="lang-de" class="section">
+    <div class="app-header">
+      <div class="app-icon"><img src="icon.png" alt="Heart Relay"></div>
+      <div class="app-title">
+        <h1>Heart Relay</h1>
+        <p>Support &amp; FAQ</p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <p style="margin-bottom:6px; color:var(--secondary); font-size:14px;">Fragen, Probleme, Ideen?</p>
+      <span class="email"><a href="mailto:hello@tekneio.com?subject=Heart%20Relay%20Support">hello@tekneio.com</a></span>
+      <p style="margin:8px 0 0; font-size:13px; color:var(--secondary);">Bitte iPhone- und Uhrenmodell, das Empfangsger&auml;t (Bike-Computer oder App) und wenn m&ouml;glich das Verbindungslog aus Einstellungen &gt; Bluetooth &amp; Diagnose mitschicken.</p>
+    </div>
+
+    <h2>H&auml;ufige Fragen</h2>
+
+    <details>
+      <summary>Mein Bike-Computer / meine App findet &bdquo;Heart Relay&ldquo; nicht</summary>
+      
+      <p>Das iPhone ist nur <em>auffindbar</em>, solange Heart Relay im Vordergrund ge&ouml;ffnet ist. Sobald ein Ger&auml;t verbunden ist, bleibt die Verbindung auch bei gesperrtem iPhone in der Tasche bestehen.</p>
+      <ol>
+        <li>Heart Relay auf dem iPhone &ouml;ffnen und pr&uuml;fen, dass Bluetooth &bdquo;sichtbar&ldquo; anzeigt.</li>
+        <li>Am Empf&auml;nger: Sensoren &rarr; Herzfrequenzsensor hinzuf&uuml;gen &rarr; <strong>Heart Relay</strong> w&auml;hlen.</li>
+        <li>Immer noch nichts? Einstellungen &gt; Bluetooth &amp; Diagnose &gt; Bluetooth neu starten, dann erneut suchen.</li>
+      </ol>
+      <p>Heart Relay funkt nur per Bluetooth. Ger&auml;te, die Herzfrequenzsensoren ausschliesslich &uuml;ber ANT+ annehmen (einige &auml;ltere Modelle), k&ouml;nnen sich nicht verbinden; das iPhone hat keinen ANT+-Funk.</p>
+    </details>
+    <details>
+      <summary>Der Empf&auml;nger verlangt einen Kopplungscode</summary>
+      
+      <p>Manche Bike-Computer (z.&nbsp;B. der Hammerhead Karoo) lesen den Batteriestand des iPhones, und daf&uuml;r verlangt iOS eine Kopplung. Beim ersten Verbinden zeigt iOS ein Pop-up mit einem sechsstelligen Code auf dem iPhone; diesen am Empf&auml;nger eintippen. Dabei das iPhone entsperrt und die App offen lassen, die Anfrage l&auml;uft nach etwa 30 Sekunden ab.</p>
+      <p>Danach steht der Empf&auml;nger unter Einstellungen &gt; Bluetooth &gt; Meine Ger&auml;te. Dort belassen; wer ihn entfernt, entfernt die Kopplung. H&auml;ngt der Empf&auml;nger in &bdquo;Verbinden&ldquo;: Sensor am Empf&auml;nger l&ouml;schen, Ger&auml;t in den iPhone-Bluetooth-Einstellungen ignorieren, Empf&auml;nger neu starten und neu koppeln.</p>
+    </details>
+    <details>
+      <summary>Der Puls setzt aus oder friert ein</summary>
+      
+      <p>Drei Strecken k&ouml;nnen ausfallen: Sensor der Uhr, Uhr&nbsp;&rarr;&nbsp;iPhone, iPhone&nbsp;&rarr;&nbsp;Empf&auml;nger. Das Verbindungslog (Einstellungen &gt; Bluetooth &amp; Diagnose &gt; Verbindungslog) zeigt, welche:</p>
+      <ul>
+        <li><strong>&bdquo;Kein Puls von HealthKit&ldquo;</strong> von der Uhr: Der optische Sensor hat den Kontakt verloren. Uhr eng tragen, einen Finger &uuml;ber dem Handgelenkknochen; T&auml;towierungen und kalte Haut verschlechtern die Messung. Ein in iOS 26 verbundener Brustgurt umgeht das ganz.</li>
+        <li><strong>&bdquo;iPhone nicht erreichbar&ldquo;</strong>: Uhr und iPhone haben die Verbindung verloren. iPhone in Reichweite halten, am besten am Rad, nicht in der R&uuml;ckentasche hinter dem K&ouml;rper.</li>
+        <li><strong>&bdquo;Empf&auml;nger abgemeldet&ldquo;</strong>: Die Bluetooth-Verbindung zum Bike-Computer ist abgerissen. Abstand pr&uuml;fen und Bluetooth in der App neu starten.</li>
+      </ul>
+      <p>Die Uhr liefert alle paar Sekunden einen Wert; das iPhone wiederholt den letzten Wert sek&uuml;ndlich, damit der Empf&auml;nger die Pause nicht als Sensorausfall wertet.</p>
+    </details>
+    <details>
+      <summary>Start auf dem iPhone meldet, die Uhr habe nicht gestartet</summary>
+      
+      <p>Die Heart-Relay-App auf der Uhr muss installiert und aktuell sein: Auf dem iPhone die Watch-App &ouml;ffnen &rarr; Meine Watch &rarr; Heart Relay (oder &bdquo;Verf&uuml;gbare Apps&ldquo; &rarr; Installieren). Reagiert sie weiterhin nicht, Heart Relay auf der Uhr &ouml;ffnen und dort Start tippen; das iPhone &uuml;bernimmt die Session automatisch.</p>
+    </details>
+    <details>
+      <summary>AirPods Pro 3 oder Brustgurt ohne Apple Watch nutzen</summary>
+      
+      <p>Daf&uuml;r braucht es iOS 26. Zuerst die AirPods Pro 3 oder den Bluetooth-Herzfrequenzmesser in den iOS-Einstellungen verbinden. Dann auf dem Hauptschirm <strong>AirPods / Brustgurt</strong> als Quelle w&auml;hlen (Apple Watch kann abgew&auml;hlt werden) und Start tippen. Beim ersten Mal fragt iOS nach dem Health-Zugriff, damit die App den Puls der Session lesen kann.</p>
+    </details>
+    <details>
+      <summary>Pulszonen, Alarme und Ansagen</summary>
+      
+      <p>Einstellungen &gt; Pulszonen: Alter und Ruhepuls eingeben oder aus Health &uuml;bernehmen; die f&uuml;nf Zonen folgen der Karvonen-Methode (Herzfrequenzreserve). Unter Einstellungen &gt; Alarme &amp; Ansagen legen Sie je Ger&auml;t (Uhr, iPhone) fest, was bei einem Zonenwechsel passiert: Haptik, Ton oder Ansage. Die Puls-Ansage spricht den Wert, wenn er sich um den gew&auml;hlten Schritt &auml;ndert, beim Heben des Handgelenks oder beim Doppeltipp (watchOS 11). Testkn&ouml;pfe stehen unten auf dieser Seite.</p>
+      <p>Ansagen funktionieren auch bei gesperrtem iPhone; Musik wird kurz leiser. Weitere Stimmen laden Sie unter Einstellungen &gt; Bedienungshilfen &gt; Gesprochene Inhalte &gt; Stimmen.</p>
+    </details>
+    <details>
+      <summary>Auf dem Sperrbildschirm erscheint nichts</summary>
+      
+      <p>Beim ersten Start einer Session fragt iOS &bdquo;Live-Aktivit&auml;ten von Heart Relay erlauben?&ldquo;. Falls abgelehnt: Einstellungen &gt; Heart Relay &gt; Live-Aktivit&auml;ten einschalten. Die Live Activity erscheint mit der Session und verschwindet beim Stop.</p>
+    </details>
+    <details>
+      <summary>Soll ich das Uhr-Workout in Health behalten?</summary>
+      
+      <p>Wer die Fahrt danach vom Bike-Computer importiert (FIT-Datei), verwirft das Uhr-Workout besser, sonst liegt die Fahrt doppelt in Health. Unter Einstellungen &gt; Workout &gt; In Health speichern gibt es Nachfragen / Immer / Nie.</p>
+    </details>
+    <details>
+      <summary>Wie kommt eine Fahrt nach Apple Health?</summary>
+      
+      <p>Die Fahrt auf der Plattform des Bike-Computers als FIT-Datei exportieren (Hammerhead-Dashboard, Garmin Connect, Wahoo, Bryton, Sigma &hellip;). Dann entweder auf dem iPhone &ouml;ffnen und Teilen &rarr; Heart Relay w&auml;hlen, in der App &bdquo;FIT-Datei importieren&ldquo; tippen oder die Datei in der Dateien-App im Ordner &bdquo;Heart Relay&ldquo; ablegen. Die Vorschau zeigt, was geschrieben wird (Workout, Route, Puls, Distanz, Kalorien, Trittfrequenz, Leistung, Runden als Segmente) und erkennt eine Fahrt, die schon in Health liegt.</p>
+      <p>Kalorien: aus der Datei, falls vorhanden, sonst aus der Leistung berechnet, sonst aus dem Puls mit Ihrem Health-Profil gesch&auml;tzt. Die Sch&auml;tzung l&auml;sst sich pro Import abschalten.</p>
+    </details>
+    <details>
+      <summary>Wie l&ouml;sche ich meine Daten?</summary>
+      
+      <ul>
+        <li>Von der App geschriebene Health-Daten: in der Health-App l&ouml;schen (Entdecken &gt; Trainings, oder die Quellenliste unter Profil &gt; Apps).</li>
+        <li>FIT-Dateien und Verbindungslog: Dateien-App &gt; Auf meinem iPhone &gt; Heart Relay.</li>
+        <li>Alles andere: App auf dem iPhone l&ouml;schen; das entfernt auch die Uhr-App und alle Einstellungen.</li>
+      </ul>
+    </details>
+
+    <h2>Datenschutz &amp; Daten</h2>
+    <p>Heart Relay stellt keine Netzwerkverbindungen her, kennt keine Konten und keine Analyse. Der Puls geht per Bluetooth an das Ger&auml;t, das Sie verbinden, und nirgendwo sonst hin. Die vollst&auml;ndige <a href="privacy.html">Datenschutzerkl&auml;rung</a>.</p>
+
+    <h2>Systemvoraussetzungen</h2>
+    <ul>
+      <li>iPhone mit iOS 17 oder neuer; Live Activities ab iOS 17, Dynamic Island ab iPhone 14 Pro</li>
+      <li>Apple Watch mit watchOS 10 oder neuer (Ansage per Doppeltipp ab watchOS 11)</li>
+      <li>Ohne Uhr: iOS 26 mit AirPods Pro 3 oder einem Bluetooth-Herzfrequenzmesser</li>
+      <li>Ein Empf&auml;nger, der Bluetooth-Herzfrequenzsensoren annimmt: Bike-Computer (Hammerhead Karoo getestet; Wahoo ELEMNT, Garmin Edge, Bryton, Sigma), Trainings-Apps (Zwift, Rouvy, MyWhoosh, TrainerRoad, Kinomap), Peloton, Concept2 und weitere</li>
+    </ul>
+
+    <h2>Noch Fragen?</h2>
+    <p>Schreiben Sie an <a href="mailto:hello@tekneio.com">hello@tekneio.com</a>. Screenshots und das Verbindungslog beschleunigen die Antwort erheblich.</p>
+
+    <div class="footer">
+      <strong>Heart Relay</strong> &middot; Anastasios Panagou, Schweiz<br>
+      <a href="mailto:hello@tekneio.com">hello@tekneio.com</a> &middot;
+      <a href="privacy.html">Datenschutzerkl&auml;rung</a>
+    </div>
+
+  </div><!-- /lang-de -->
+
+</div><!-- /container -->
+
+<script>
+  function showLang(lang, el) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+    document.querySelectorAll('.lang-switch a').forEach(a => a.classList.remove('active'));
+    document.getElementById('lang-' + lang).classList.add('visible');
+    el.classList.add('active');
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    if ((navigator.language || '').toLowerCase().startsWith('de')) showLang('de', document.querySelectorAll('.lang-switch a')[1]);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tekneio.github.io/heart-relay/sitemap.xml

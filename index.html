@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heart Relay — Apple Watch Puls auf Bike-Computer und Trainer</title>
+<meta name="description" content="Heart Relay sendet den Puls deiner Apple Watch oder AirPods Pro 3 als Bluetooth-Herzfrequenzsensor an Karoo, Wahoo, Garmin, Zwift und jedes Gerät, das einen Brustgurt kann. Kein Abo, keine Konten, keine Telemetrie.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Heart Relay — Apple Watch Puls auf Bike-Computer und Trainer">
+<meta property="og:description" content="Apple Watch oder AirPods Pro 3 als Bluetooth-Brustgurt für Karoo, Wahoo, Garmin, Zwift. Kein Abo, keine Telemetrie.">
+<meta property="og:url" content="https://tekneio.github.io/heart-relay/">
+<meta property="og:image" content="https://tekneio.github.io/heart-relay/icon.png">
+<meta property="og:locale" content="de_CH">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Heart Relay">
+<meta name="twitter:description" content="Apple Watch oder AirPods Pro 3 als Bluetooth-Brustgurt für Bike-Computer und Trainings-Apps.">
+<meta name="twitter:image" content="https://tekneio.github.io/heart-relay/icon.png">
+
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon.png">
+<meta name="theme-color" content="#0b0712">
+<link rel="canonical" href="https://tekneio.github.io/heart-relay/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "Heart Relay",
+  "operatingSystem": "iOS 17, watchOS 10",
+  "applicationCategory": "HealthApplication",
+  "description": "Sendet den Puls der Apple Watch oder der AirPods Pro 3 als Bluetooth-Herzfrequenzsensor an Bike-Computer und Trainings-Apps. Kein Abo, keine Konten, keine Telemetrie.",
+  "image": "https://tekneio.github.io/heart-relay/icon.png",
+  "url": "https://tekneio.github.io/heart-relay/",
+  "author": { "@type": "Organization", "name": "TEKNEIO", "url": "https://tekneio.github.io/heart-relay/", "email": "hello@tekneio.com" },
+  "publisher": { "@type": "Organization", "name": "TEKNEIO" },
+  "inLanguage": ["de", "en"]
+}
+</script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --red:       #ff3b5c;
+    --red-light: #ff7a8f;
+    --red-glow:  rgba(255,59,92,0.32);
+    --green:     #34c759;
+    --text:      #ffffff;
+    --muted:     rgba(255,255,255,0.70);
+    --glass:     rgba(255,255,255,0.08);
+    --border:    rgba(255,255,255,0.13);
+    --bg:        #0b0712;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: -apple-system, 'SF Pro Display', BlinkMacSystemFont, 'Helvetica Neue', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+  .section { padding: 100px 28px; }
+  .divider { height: 1px; max-width: 1100px; margin: 0 auto; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent); }
+  .label { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--red-light); margin-bottom: 14px; opacity: 0.9; }
+  .label.green { color: var(--green); }
+  h2.title { font-size: clamp(32px, 4.5vw, 54px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 18px; }
+  h2.title .dim { color: rgba(255,255,255,0.28); }
+  p.body-text { font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.68); max-width: 560px; }
+  .center { text-align: center; }
+  .center p.body-text { margin: 0 auto; }
+
+  /* Hero */
+  .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 64px 24px 48px; background: linear-gradient(180deg, #16081a 0%, var(--bg) 100%); position: relative; overflow: hidden; text-align: center; }
+  .orb { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(90px); opacity: 0; animation: orb-in 2s ease forwards; }
+  .orb-1 { width: 640px; height: 640px; background: radial-gradient(circle, rgba(255,59,92,0.40) 0%, transparent 70%); top: -200px; left: -160px; animation: orb-in 2s ease forwards, orb-a 20s ease-in-out 2s infinite alternate; }
+  .orb-2 { width: 520px; height: 520px; background: radial-gradient(circle, rgba(120,45,200,0.40) 0%, transparent 70%); top: 120px; right: -140px; animation: orb-in 2.5s ease forwards, orb-b 24s ease-in-out 2.5s infinite alternate; }
+  @keyframes orb-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes orb-a { 0% { transform: translate(0,0) scale(1); } 50% { transform: translate(50px,30px) scale(1.06); } 100% { transform: translate(-20px,50px) scale(0.96); } }
+  @keyframes orb-b { 0% { transform: translate(0,0) scale(1); } 50% { transform: translate(-40px,25px) scale(1.05); } 100% { transform: translate(20px,-30px) scale(0.94); } }
+  .app-icon { width: 96px; height: 96px; border-radius: 22px; box-shadow: 0 18px 48px rgba(255,59,92,0.35), 0 6px 18px rgba(0,0,0,0.5); margin-bottom: 18px; position: relative; z-index: 2; }
+  .badge { display: inline-flex; align-items: center; gap: 8px; background: var(--glass); border: 1px solid var(--border); border-radius: 100px; padding: 7px 18px; font-size: 13px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--red-light); margin-bottom: 26px; backdrop-filter: blur(12px); position: relative; z-index: 2; }
+  .badge::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--red-light); box-shadow: 0 0 10px var(--red-light); }
+  .hero h1 { font-size: clamp(46px, 7.5vw, 84px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.0; margin-bottom: 14px; position: relative; z-index: 2; }
+  .hero h1 .a { background: linear-gradient(140deg, var(--red) 0%, var(--red-light) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-tagline { font-size: clamp(19px, 2.4vw, 28px); font-weight: 600; color: rgba(255,255,255,0.85); margin: 0 auto 12px; position: relative; z-index: 2; letter-spacing: -0.01em; max-width: 760px; }
+  .hero-sub { font-size: 17px; color: var(--muted); max-width: 560px; line-height: 1.55; margin: 0 auto 30px; position: relative; z-index: 2; }
+  .trust { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; margin-bottom: 44px; position: relative; z-index: 2; }
+  .trust span { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(255,255,255,0.62); letter-spacing: 0.02em; }
+  .trust svg { width: 14px; height: 14px; }
+
+  /* Flow diagram */
+  .flow { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: 0; width: 100%; max-width: 860px; margin: 0 auto; }
+  .node { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 190px; }
+  .node .ic { width: 96px; height: 96px; border-radius: 28px; background: var(--glass); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.35); }
+  .node .ic svg { width: 46px; height: 46px; fill: none; stroke: #fff; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .node.mid .ic { border-color: rgba(255,59,92,0.5); box-shadow: 0 0 40px var(--red-glow), 0 10px 30px rgba(0,0,0,0.35); }
+  .node strong { font-size: 15px; }
+  .node small { font-size: 12px; color: var(--muted); text-align: center; line-height: 1.4; }
+  .link { flex: 1; height: 54px; position: relative; min-width: 60px; }
+  .link svg { width: 100%; height: 100%; overflow: visible; }
+  .link svg.v { display: none; }
+  .link path { fill: none; stroke: var(--red-light); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgba(255,122,143,0.8)); stroke-dasharray: 400; stroke-dashoffset: 400; animation: ecg 2.4s linear infinite; }
+  .link.second path { animation-delay: 1.2s; }
+  @keyframes ecg { to { stroke-dashoffset: 0; } }
+  .link .tag { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+
+  /* Steps */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+  .step { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 26px 24px; backdrop-filter: blur(12px); }
+  .step .n { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,59,92,0.18); color: var(--red-light); font-weight: 800; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .step h3 { font-size: 18px; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .step p { font-size: 14px; line-height: 1.6; color: var(--muted); }
+
+  /* Feature grid */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+  .card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 26px 24px; backdrop-filter: blur(12px); }
+  .card .ic { width: 44px; height: 44px; border-radius: 12px; background: rgba(255,59,92,0.16); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .card .ic svg { width: 24px; height: 24px; fill: none; stroke: var(--red-light); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .card h3 { font-size: 17px; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .card p { font-size: 14px; line-height: 1.6; color: var(--muted); }
+  .card .new { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-left: 8px; vertical-align: middle; }
+
+  /* Pills */
+  .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; justify-content: center; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; background: var(--glass); border: 1px solid var(--border); border-radius: 100px; padding: 8px 16px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.75); backdrop-filter: blur(10px); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red-light); }
+  .dot.g { background: var(--green); }
+
+  /* Stats */
+  .stat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 48px; max-width: 860px; margin-left: auto; margin-right: auto; }
+  .stat-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 26px 20px; text-align: center; backdrop-filter: blur(12px); }
+  .stat-num { font-size: 46px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; background: linear-gradient(135deg, #fff 30%, var(--red-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
+  .stat-lbl { font-size: 13px; color: var(--muted); font-weight: 500; }
+
+  /* CTA */
+  .cta-section { text-align: center; padding: 100px 24px 90px; background: radial-gradient(ellipse 65% 50% at 50% 100%, rgba(255,59,92,0.28) 0%, transparent 70%); }
+  .cta-h { font-size: clamp(36px, 5.5vw, 66px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 18px; }
+  .cta-sub { font-size: 18px; color: var(--muted); margin-bottom: 36px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, var(--red), var(--red-light)); color: #fff; font-size: 17px; font-weight: 700; padding: 18px 42px; border-radius: 100px; text-decoration: none; box-shadow: 0 8px 32px rgba(255,59,92,0.45); transition: transform 0.15s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.ghost { background: var(--glass); border: 1px solid var(--border); box-shadow: none; }
+
+  footer { padding: 60px 24px 48px; border-top: 1px solid rgba(255,255,255,0.06); background: rgba(0,0,0,0.30); }
+  footer h4 { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.50); margin-bottom: 16px; }
+  footer ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  footer a { font-size: 14px; color: rgba(255,255,255,0.78); text-decoration: none; }
+  footer a:hover { color: #fff; }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .link path { animation: none; stroke-dashoffset: 0; } }
+
+  @media (max-width: 800px) {
+    .steps, .grid, .stat-grid { grid-template-columns: 1fr; }
+    .flow { flex-direction: column; gap: 10px; }
+    .link { width: 54px; height: 90px; flex: none; min-width: 0; }
+    .link svg.h { display: none; }
+    .link svg.v { display: block; }
+    .link .tag { top: 50%; left: 44px; transform: translateY(-50%); }
+    .node { width: auto; }
+  }
+  @media (max-width: 480px) {
+    .section { padding: 64px 20px; }
+    .hero { padding: 48px 16px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<button id="lang-toggle" aria-label="Switch to English" style="position:fixed;top:20px;right:24px;z-index:1000;background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.22);color:#fff;font-size:12px;font-weight:700;letter-spacing:0.08em;padding:6px 14px;border-radius:20px;cursor:pointer;backdrop-filter:blur(14px);">EN</button>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <img src="icon.png" alt="Heart Relay App Icon" class="app-icon">
+  <div class="badge"><span data-key="badge">Bald im App Store</span></div>
+  <h1><span class="a">Heart Relay</span></h1>
+  <p class="hero-tagline" data-key="tagline">Dein Puls von der Apple Watch auf den Bike-Computer.</p>
+  <p class="hero-sub" data-key="sub">Das iPhone wird zum Bluetooth-Brustgurt: Karoo, Wahoo, Garmin, Zwift, Peloton – alles, was einen Herzfrequenzsensor annimmt. Kein Abo, keine Konten, keine Telemetrie.</p>
+  <div class="trust">
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span data-key="t1">Apple Watch</span></span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span data-key="t2">AirPods Pro 3 · Brustgurt</span></span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span data-key="t3">Bluetooth-Standard</span></span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span data-key="t4">Keine Telemetrie</span></span>
+  </div>
+
+  <!-- Flow: Watch → iPhone → Bike computer -->
+  <div class="flow" aria-label="Apple Watch → iPhone → Bike-Computer">
+    <div class="node">
+      <div class="ic"><svg viewBox="0 0 24 24"><rect x="7" y="5" width="10" height="14" rx="3"/><path d="M9 5V2.5h6V5M9 19v2.5h6V19M17 10h1.5v4H17"/><path d="M12 15.2s-2.6-1.6-2.6-3.3c0-.9.7-1.5 1.4-1.5.6 0 1 .3 1.2.7.2-.4.6-.7 1.2-.7.7 0 1.4.6 1.4 1.5 0 1.7-2.6 3.3-2.6 3.3z" fill="#ff7a8f" stroke="none"/></svg></div>
+      <strong data-key="n1">Apple Watch</strong>
+      <small data-key="n1s">oder AirPods Pro 3 /<br>Brustgurt (iOS 26)</small>
+    </div>
+    <div class="link"><span class="tag" data-key="l1">Puls</span><svg class="h" viewBox="0 0 200 54" preserveAspectRatio="none"><path d="M0 27 H60 L68 27 L74 12 L80 44 L86 20 L92 27 H200"/></svg><svg class="v" viewBox="0 0 54 100" preserveAspectRatio="none"><path d="M27 0 V30 L27 34 L12 37 L44 40 L20 43 L27 46 V100"/></svg></div>
+    <div class="node mid">
+      <div class="ic"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10 5.5h4"/><path d="M8.5 13.5s-1.7-1.1-1.7-2.3c0-.6.5-1 .9-1 .4 0 .7.2.8.5.1-.3.4-.5.8-.5.5 0 .9.4.9 1 0 1.2-1.7 2.3-1.7 2.3z" fill="#ff7a8f" stroke="none"/><path d="M12.5 13.5h4M12.5 11h4M12.5 16h3"/></svg></div>
+      <strong>iPhone</strong>
+      <small data-key="n2s">sendet als Bluetooth-<br>Herzfrequenzsensor</small>
+    </div>
+    <div class="link second"><span class="tag">Bluetooth</span><svg class="h" viewBox="0 0 200 54" preserveAspectRatio="none"><path d="M0 27 H60 L68 27 L74 12 L80 44 L86 20 L92 27 H200"/></svg><svg class="v" viewBox="0 0 54 100" preserveAspectRatio="none"><path d="M27 0 V30 L27 34 L12 37 L44 40 L20 43 L27 46 V100"/></svg></div>
+    <div class="node">
+      <div class="ic"><svg viewBox="0 0 24 24"><circle cx="6" cy="16.5" r="3.5"/><circle cx="18" cy="16.5" r="3.5"/><path d="M6 16.5l3.5-7h5l3.5 7M9.5 9.5H8M12 9.5l1.5 3.5H6"/></svg></div>
+      <strong data-key="n3">Bike-Computer</strong>
+      <small data-key="n3s">oder Trainings-App,<br>Trainer, Rudergerät</small>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STEPS -->
+<section class="section">
+  <div class="wrap center">
+    <span class="label" data-key="s1-label">So funktioniert's</span>
+    <h2 class="title" data-key="s1-h">Drei Schritte,<br><span class="dim">dann fährst du.</span></h2>
+    <p class="body-text" data-key="s1-p">Keine Konfiguration, kein Konto. Heart Relay nutzt das Bluetooth-Herzfrequenzprofil, das jeder Brustgurt spricht.</p>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3 data-key="st1-h">Start tippen</h3><p data-key="st1-p">Auf dem iPhone oder auf der Uhr. Die Watch misst den Puls und schickt ihn ans iPhone.</p></div>
+      <div class="step"><div class="n">2</div><h3 data-key="st2-h">„Heart Relay“ wählen</h3><p data-key="st2-p">Am Bike-Computer oder in der App: Sensoren → Herzfrequenz hinzufügen → Heart Relay. Fragt das Gerät nach einem Code, steht er auf dem iPhone.</p></div>
+      <div class="step"><div class="n">3</div><h3 data-key="st3-h">Losfahren</h3><p data-key="st3-p">Sobald der Empfänger verbunden ist, darf das iPhone in die Tasche und gesperrt werden. Die Verbindung bleibt.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="wrap center">
+    <span class="label" data-key="f-label">Funktionen</span>
+    <h2 class="title" data-key="f-h">Alles, was du<br><span class="dim">unterwegs brauchst.</span></h2>
+    <div class="grid" style="text-align:left;">
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-9.3C5 8 6.8 6 9 6c1.4 0 2.4.8 3 1.8.6-1 1.6-1.8 3-1.8 2.2 0 4 2 4 4.7 0 4.9-7 9.3-7 9.3z"/></svg></div><h3 data-key="c1-h">Bluetooth-Standard</h3><p data-key="c1-p">Das iPhone tritt als normaler Herzfrequenzsensor auf. Funktioniert mit jedem Gerät und jeder App, die einen Brustgurt annimmt. Kein ANT+ nötig.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-6 3 12 2-8 2 4h5"/></svg></div><h3 data-key="c2-h">Pulszonen &amp; Alarme</h3><p data-key="c2-p">Fünf Zonen aus Alter und Ruhepuls, auf Wunsch aus Health. Bei jedem Zonenwechsel Haptik, Ton oder Ansage, auf der Uhr und auf dem iPhone.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 10v4h3l4 4V6l-4 4H4zM15 9a3.5 3.5 0 010 6M17.5 6.5a7 7 0 010 11"/></svg></div><h3 data-key="c3-h">Puls-Ansage</h3><p data-key="c3-p">Sagt den Puls, wenn er sich um den gewählten Schritt ändert, beim Heben des Handgelenks oder per Doppeltipp. Stimme und Sprache wählbar.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 8a3 3 0 016 0v7a3 3 0 01-6 0zM12 8a3 3 0 016 0v7a3 3 0 01-6 0z"/><path d="M9 15v5M15 15v5"/></svg></div><h3 data-key="c4-h">AirPods Pro 3 &amp; Brustgurt<span class="new">iOS 26</span></h3><p data-key="c4-p">Ohne Apple Watch: Der Puls der AirPods Pro 3 oder eines in iOS verbundenen Brustgurts wird genauso weitergereicht.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="4"/><path d="M7 12h3l1.5-3 2 6 1.5-3h2"/></svg></div><h3 data-key="c5-h">Live Activity</h3><p data-key="c5-p">Puls, Zone, Laufzeit und Verbindungsstatus auf dem Sperrbildschirm und in der Dynamic Island, mit Stop-Knopf.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v12M8 11l4 4 4-4"/><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg></div><h3 data-key="c6-h">Fahrt nach Apple Health</h3><p data-key="c6-p">FIT-Datei vom Bike-Computer importieren: Route, Puls, Distanz, Kalorien, Leistung und Trittfrequenz landen als Workout in Health.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMPATIBILITY -->
+<section class="section">
+  <div class="wrap center">
+    <span class="label" data-key="k-label">Kompatibilität</span>
+    <h2 class="title" data-key="k-h">Wenn es einen Brustgurt kann,<br><span class="dim">kann es Heart Relay.</span></h2>
+    <p class="body-text" data-key="k-p">Getestet mit dem Hammerhead Karoo 2. Alle anderen Geräte sprechen dasselbe Bluetooth-Profil (Heart Rate Service). Kein ANT+, das iPhone hat keinen ANT+-Funk.</p>
+    <div class="pills">
+      <span class="pill"><span class="dot g"></span>Hammerhead Karoo</span>
+      <span class="pill"><span class="dot"></span>Wahoo ELEMNT</span>
+      <span class="pill"><span class="dot"></span>Garmin Edge</span>
+      <span class="pill"><span class="dot"></span>Zwift</span>
+      <span class="pill"><span class="dot"></span>Rouvy</span>
+      <span class="pill"><span class="dot"></span>MyWhoosh</span>
+      <span class="pill"><span class="dot"></span>TrainerRoad</span>
+      <span class="pill"><span class="dot"></span>Peloton</span>
+      <span class="pill"><span class="dot"></span>Kinomap</span>
+      <span class="pill"><span class="dot"></span>Concept2</span>
+      <span class="pill"><span class="dot"></span>Bryton · Sigma</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRIVACY -->
+<section class="section">
+  <div class="wrap center">
+    <span class="label green" data-key="p-label">Datenschutz</span>
+    <h2 class="title" data-key="p-h">Dein Puls bleibt<br><span class="dim">bei dir.</span></h2>
+    <p class="body-text" data-key="p-p">Heart Relay hat keinen Server, keine Analyse, keine Konten. Der Puls geht per Bluetooth genau an das eine Gerät, das du verbindest, sonst nirgendwohin.</p>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-num">0</div><div class="stat-lbl" data-key="p1">Server · Netzwerk</div></div>
+      <div class="stat-card"><div class="stat-num">0</div><div class="stat-lbl" data-key="p2">Tracker · Werbung</div></div>
+      <div class="stat-card"><div class="stat-num">1</div><div class="stat-lbl" data-key="p3">Kauf, kein Abo</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="cta-h" data-key="cta-h">Bereit, die Uhr<br><span style="background:linear-gradient(135deg,var(--red),var(--red-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">am Lenker zu sehen?</span></h2>
+  <p class="cta-sub" data-key="cta-sub">Heart Relay erscheint demnächst im App Store. Einmaliger Kauf, kein Abo.</p>
+  <!-- App-Store-Knopf nach Freigabe einsetzen: <a href="https://apps.apple.com/app/idXXXXXXXXXX" class="btn">Im App Store laden</a> -->
+  <a href="mailto:hello@tekneio.com?subject=Heart%20Relay" class="btn ghost" data-key="cta-btn">Bescheid sagen, wenn es so weit ist</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:40px; align-items:start;">
+    <div>
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+        <img src="icon.png" alt="Heart Relay" style="width:44px;height:44px;border-radius:11px;">
+        <strong style="font-size:18px; letter-spacing:-0.01em;">Heart Relay</strong>
+      </div>
+      <p style="font-size:13px; color:rgba(255,255,255,0.55); line-height:1.6; max-width:280px;" data-key="f-about">Apple Watch und AirPods Pro 3 als Bluetooth-Herzfrequenzsensor. Made in Switzerland.</p>
+    </div>
+    <div>
+      <h4 data-key="f-support">Support</h4>
+      <ul>
+        <li><a href="https://tekneio.github.io/heart-relay/support.html" data-key="f-help">Hilfe &amp; FAQ</a></li>
+        <li><a href="mailto:hello@tekneio.com">hello@tekneio.com</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 data-key="f-legal">Rechtliches</h4>
+      <ul>
+        <li><a href="https://tekneio.github.io/heart-relay/privacy.html" data-key="f-privacy">Datenschutz</a></li>
+        <li><a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" data-key="f-terms">Lizenzbedingungen</a></li>
+      </ul>
+    </div>
+  </div>
+  <div style="max-width:1100px; margin:48px auto 0; padding-top:28px; border-top:1px solid rgba(255,255,255,0.06); display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap;">
+    <p style="font-size:12px; color:rgba(255,255,255,0.40);" data-key="f-copy">© 2026 Anastasios Panagou · TEKNEIO. Heart Relay. Alle Rechte vorbehalten.</p>
+    <p style="font-size:12px; color:rgba(255,255,255,0.40);" data-key="f-req">iOS 17+ · watchOS 10+ · AirPods Pro 3 und Brustgurt ab iOS 26</p>
+  </div>
+  <p style="max-width:1100px; margin:16px auto 0; font-size:11px; color:rgba(255,255,255,0.30); line-height:1.5;" data-key="f-tm">Apple, Apple Watch, AirPods und iPhone sind Marken von Apple Inc. Hammerhead, Karoo, Wahoo, Garmin, Zwift und weitere genannte Namen sind Marken ihrer Inhaber; Heart Relay steht in keiner Verbindung zu ihnen.</p>
+</footer>
+
+<script>
+const T = {
+  'badge':   { de: 'Bald im App Store', en: 'Coming soon to the App Store' },
+  'tagline': { de: 'Dein Puls von der Apple Watch auf den Bike-Computer.', en: 'Your Apple Watch heart rate on your bike computer.' },
+  'sub':     { de: 'Das iPhone wird zum Bluetooth-Brustgurt: Karoo, Wahoo, Garmin, Zwift, Peloton – alles, was einen Herzfrequenzsensor annimmt. Kein Abo, keine Konten, keine Telemetrie.', en: 'Your iPhone becomes a Bluetooth chest strap: Karoo, Wahoo, Garmin, Zwift, Peloton – anything that accepts a heart rate sensor. No subscription, no accounts, no telemetry.' },
+  't1': { de: 'Apple Watch', en: 'Apple Watch' },
+  't2': { de: 'AirPods Pro 3 · Brustgurt', en: 'AirPods Pro 3 · chest strap' },
+  't3': { de: 'Bluetooth-Standard', en: 'Bluetooth standard' },
+  't4': { de: 'Keine Telemetrie', en: 'No telemetry' },
+  'n1':  { de: 'Apple Watch', en: 'Apple Watch' },
+  'n1s': { de: 'oder AirPods Pro 3 /<br>Brustgurt (iOS 26)', en: 'or AirPods Pro 3 /<br>chest strap (iOS 26)' },
+  'l1':  { de: 'Puls', en: 'Heart rate' },
+  'n2s': { de: 'sendet als Bluetooth-<br>Herzfrequenzsensor', en: 'broadcasts as a Bluetooth<br>heart rate sensor' },
+  'n3':  { de: 'Bike-Computer', en: 'Bike computer' },
+  'n3s': { de: 'oder Trainings-App,<br>Trainer, Rudergerät', en: 'or training app,<br>trainer, rower' },
+  's1-label': { de: 'So funktioniert\'s', en: 'How it works' },
+  's1-h': { de: 'Drei Schritte,<br><span class="dim">dann fährst du.</span>', en: 'Three steps,<br><span class="dim">then you ride.</span>' },
+  's1-p': { de: 'Keine Konfiguration, kein Konto. Heart Relay nutzt das Bluetooth-Herzfrequenzprofil, das jeder Brustgurt spricht.', en: 'No configuration, no account. Heart Relay uses the Bluetooth heart rate profile every chest strap speaks.' },
+  'st1-h': { de: 'Start tippen', en: 'Tap Start' },
+  'st1-p': { de: 'Auf dem iPhone oder auf der Uhr. Die Watch misst den Puls und schickt ihn ans iPhone.', en: 'On the iPhone or on the watch. The watch measures your heart rate and sends it to the iPhone.' },
+  'st2-h': { de: '„Heart Relay“ wählen', en: 'Pick “Heart Relay”' },
+  'st2-p': { de: 'Am Bike-Computer oder in der App: Sensoren → Herzfrequenz hinzufügen → Heart Relay. Fragt das Gerät nach einem Code, steht er auf dem iPhone.', en: 'On the bike computer or in the app: Sensors → add heart rate → Heart Relay. If the device asks for a code, it shows on the iPhone.' },
+  'st3-h': { de: 'Losfahren', en: 'Ride' },
+  'st3-p': { de: 'Sobald der Empfänger verbunden ist, darf das iPhone in die Tasche und gesperrt werden. Die Verbindung bleibt.', en: 'Once the receiver is connected, the iPhone can go in your pocket and be locked. The connection stays.' },
+  'f-label': { de: 'Funktionen', en: 'Features' },
+  'f-h': { de: 'Alles, was du<br><span class="dim">unterwegs brauchst.</span>', en: 'Everything you need<br><span class="dim">on the road.</span>' },
+  'c1-h': { de: 'Bluetooth-Standard', en: 'Bluetooth standard' },
+  'c1-p': { de: 'Das iPhone tritt als normaler Herzfrequenzsensor auf. Funktioniert mit jedem Gerät und jeder App, die einen Brustgurt annimmt. Kein ANT+ nötig.', en: 'The iPhone appears as a regular heart rate sensor. Works with any device or app that accepts a chest strap. No ANT+ needed.' },
+  'c2-h': { de: 'Pulszonen &amp; Alarme', en: 'Heart rate zones &amp; alerts' },
+  'c2-p': { de: 'Fünf Zonen aus Alter und Ruhepuls, auf Wunsch aus Health. Bei jedem Zonenwechsel Haptik, Ton oder Ansage, auf der Uhr und auf dem iPhone.', en: 'Five zones from age and resting heart rate, optionally taken from Health. Haptic, sound or voice on every zone change, on the watch and on the iPhone.' },
+  'c3-h': { de: 'Puls-Ansage', en: 'Heart rate announcements' },
+  'c3-p': { de: 'Sagt den Puls, wenn er sich um den gewählten Schritt ändert, beim Heben des Handgelenks oder per Doppeltipp. Stimme und Sprache wählbar.', en: 'Speaks your heart rate when it changes by the chosen step, on wrist raise or on double tap. Voice and language selectable.' },
+  'c4-h': { de: 'AirPods Pro 3 &amp; Brustgurt<span class="new">iOS 26</span>', en: 'AirPods Pro 3 &amp; chest strap<span class="new">iOS 26</span>' },
+  'c4-p': { de: 'Ohne Apple Watch: Der Puls der AirPods Pro 3 oder eines in iOS verbundenen Brustgurts wird genauso weitergereicht.', en: 'No Apple Watch? The heart rate from AirPods Pro 3 or a chest strap connected in iOS is relayed just the same.' },
+  'c5-h': { de: 'Live Activity', en: 'Live Activity' },
+  'c5-p': { de: 'Puls, Zone, Laufzeit und Verbindungsstatus auf dem Sperrbildschirm und in der Dynamic Island, mit Stop-Knopf.', en: 'Heart rate, zone, elapsed time and connection status on the Lock Screen and in the Dynamic Island, with a Stop button.' },
+  'c6-h': { de: 'Fahrt nach Apple Health', en: 'Ride to Apple Health' },
+  'c6-p': { de: 'FIT-Datei vom Bike-Computer importieren: Route, Puls, Distanz, Kalorien, Leistung und Trittfrequenz landen als Workout in Health.', en: 'Import the FIT file from your bike computer: route, heart rate, distance, calories, power and cadence land in Health as a workout.' },
+  'k-label': { de: 'Kompatibilität', en: 'Compatibility' },
+  'k-h': { de: 'Wenn es einen Brustgurt kann,<br><span class="dim">kann es Heart Relay.</span>', en: 'If it takes a chest strap,<br><span class="dim">it takes Heart Relay.</span>' },
+  'k-p': { de: 'Getestet mit dem Hammerhead Karoo 2. Alle anderen Geräte sprechen dasselbe Bluetooth-Profil (Heart Rate Service). Kein ANT+, das iPhone hat keinen ANT+-Funk.', en: 'Tested with the Hammerhead Karoo 2. All other devices speak the same Bluetooth profile (Heart Rate Service). No ANT+, the iPhone has no ANT+ radio.' },
+  'p-label': { de: 'Datenschutz', en: 'Privacy' },
+  'p-h': { de: 'Dein Puls bleibt<br><span class="dim">bei dir.</span>', en: 'Your heart rate<br><span class="dim">stays with you.</span>' },
+  'p-p': { de: 'Heart Relay hat keinen Server, keine Analyse, keine Konten. Der Puls geht per Bluetooth genau an das eine Gerät, das du verbindest, sonst nirgendwohin.', en: 'Heart Relay has no server, no analytics, no accounts. Your heart rate goes via Bluetooth to the one device you connect, and nowhere else.' },
+  'p1': { de: 'Server · Netzwerk', en: 'Servers · network' },
+  'p2': { de: 'Tracker · Werbung', en: 'Trackers · ads' },
+  'p3': { de: 'Kauf, kein Abo', en: 'Purchase, no subscription' },
+  'cta-h': { de: 'Bereit, die Uhr<br><span style="background:linear-gradient(135deg,var(--red),var(--red-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">am Lenker zu sehen?</span>', en: 'Ready to see your watch<br><span style="background:linear-gradient(135deg,var(--red),var(--red-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">on the handlebar?</span>' },
+  'cta-sub': { de: 'Heart Relay erscheint demnächst im App Store. Einmaliger Kauf, kein Abo.', en: 'Heart Relay is coming to the App Store soon. One-time purchase, no subscription.' },
+  'cta-btn': { de: 'Bescheid sagen, wenn es so weit ist', en: 'Tell me when it\'s out' },
+  'f-about': { de: 'Apple Watch und AirPods Pro 3 als Bluetooth-Herzfrequenzsensor. Made in Switzerland.', en: 'Apple Watch and AirPods Pro 3 as a Bluetooth heart rate sensor. Made in Switzerland.' },
+  'f-support': { de: 'Support', en: 'Support' },
+  'f-help': { de: 'Hilfe &amp; FAQ', en: 'Help &amp; FAQ' },
+  'f-legal': { de: 'Rechtliches', en: 'Legal' },
+  'f-privacy': { de: 'Datenschutz', en: 'Privacy Policy' },
+  'f-terms': { de: 'Lizenzbedingungen', en: 'License Agreement' },
+  'f-copy': { de: '© 2026 Anastasios Panagou · TEKNEIO. Heart Relay. Alle Rechte vorbehalten.', en: '© 2026 Anastasios Panagou · TEKNEIO. Heart Relay. All rights reserved.' },
+  'f-req': { de: 'iOS 17+ · watchOS 10+ · AirPods Pro 3 und Brustgurt ab iOS 26', en: 'iOS 17+ · watchOS 10+ · AirPods Pro 3 and chest strap from iOS 26' },
+  'f-tm': { de: 'Apple, Apple Watch, AirPods und iPhone sind Marken von Apple Inc. Hammerhead, Karoo, Wahoo, Garmin, Zwift und weitere genannte Namen sind Marken ihrer Inhaber; Heart Relay steht in keiner Verbindung zu ihnen.', en: 'Apple, Apple Watch, AirPods and iPhone are trademarks of Apple Inc. Hammerhead, Karoo, Wahoo, Garmin, Zwift and other names mentioned are trademarks of their owners; Heart Relay is not affiliated with any of them.' },
+};
+let currentLang = 'de';
+function setLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-key]').forEach(el => { const k = el.dataset.key; if (T[k]) el.innerHTML = T[k][lang]; });
+  const btn = document.getElementById('lang-toggle');
+  btn.textContent = lang === 'de' ? 'EN' : 'DE';
+  btn.setAttribute('aria-label', lang === 'de' ? 'Switch to English' : 'Auf Deutsch wechseln');
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const userLang = (navigator.language || 'de').toLowerCase();
+  setLang(userLang.startsWith('de') ? 'de' : 'en');
+  document.getElementById('lang-toggle').addEventListener('click', () => setLang(currentLang === 'de' ? 'en' : 'de'));
+  const els = document.querySelectorAll('.section, .cta-section, footer');
+  els.forEach(s => s.classList.add('reveal'));
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -80px 0px', threshold: 0.05 });
+    els.forEach(s => io.observe(s));
+  } else { els.forEach(s => s.classList.add('in')); }
+});
+</script>
+</body>
+</html>
